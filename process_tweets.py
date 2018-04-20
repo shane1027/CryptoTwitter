@@ -1,5 +1,7 @@
 #!usr/bin/python
 
+## Shane Ryan
+
 import json
 import re
 from textblob import TextBlob
@@ -55,10 +57,16 @@ tweet_data = list()
 for tweet in raw_tweets:
     tweet_data.append(process_tweet(tweet))
 
-print(tweet_data)
+sentiment_block_score = 0
+retweet_block_score = 0
 for n, tweet in enumerate(tweet_data):
+    sentiment_block_score += tweet.sentiment
+    retweet_block_score += tweet.retweets
     print("""Tweet %d\n\nContent:\n%s\n\nSentiment:\t%d\n\nTime:\t%s\n\n"""
-            % (n, tweet.text, tweet.sentiment, tweet.time))
+            % (n+1, tweet.text, tweet.sentiment, tweet.time))
+
+print("Total sentiment score for block: %d" % sentiment_block_score)
+print("Weighted by retweets: %d" % retweet_block_score)
 
 
 
